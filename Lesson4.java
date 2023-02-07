@@ -10,12 +10,12 @@ public class Lesson4 {
         Queue<Integer> queuex = new LinkedList<Integer>();
         Queue<Integer> queuey = new LinkedList<Integer>();
     
-        int n = 10; // количество строк
+        int n = 20; // количество строк
         int m = 10; // количество столбцов
         int[][] arr = new int[n][m];
         int startpoint = 1;
         int endpoint = 99;      // надо будет потом поменять 99
-        int[] blocks = new int[] { 21, 30, 39, 48, 22, 23, 24 }; // Номера ячеек по порядку
+        int[] blocks = new int[] { 21, 30, 39, 48, 57, 66, 75, 84, 85, 94, 103, 104, 113, 122, 22, 23, 24 }; // Номера ячеек по порядку
 
         int[][] newarea = arrOneByOneFilling(arr, n, m);
         print(arr, n, m);
@@ -32,20 +32,19 @@ public class Lesson4 {
         int[][] newarrWithBlocks = blockspreptozero(arrWithBlocks, n, m);
         print(newarrWithBlocks, n, m);
         System.out.println();
-        int i = 5;
-        int j = 2;
+        int i = 5;  //5
+        int j = 2;  //2
         newarrWithBlocks[i][j] = startpoint;
 
         int o = 6;
         int p = 7;
-        // newarrWithBlocks[o][p] = endpoint;
+
 
         queuey.add(i);
         queuex.add(j);
         print(newarrWithBlocks, n, m);
         System.out.println();
-        // System.out.println(queuey);
-        // System.out.println(queuex);
+
 
         while (i != o || j != p ) {
             i = queuey.element();
@@ -73,17 +72,69 @@ public class Lesson4 {
             }
             queuex.remove();
             queuey.remove();
-            // System.out.println(queuey);
-            // System.out.println(queuex);
-            // System.out.println(i);
-            // System.out.println(j);
+
+        }
+
+        print(newarrWithBlocks, n, m);
+       
+        queuex.clear();
+        queuey.clear();
+
+        i = o;
+        j = p;
+
+        queuey.add(i);
+        queuex.add(j);
+        System.out.println();
+
+        while (queuex.size() > 0) {  
+                 
+            i = queuey.element();
+            j = queuex.element();
+
+            if (newarrWithBlocks[i][j - 1] == newarrWithBlocks[i][j] - 1) {
+                newarrWithBlocks[i][j - 1] = newarrWithBlocks[i][j] - 1;
+                queuey.add(i);
+                queuex.add(j-1);  
+                newarrWithBlocks[i][j] = 99; 
+      
+            }
+            if (newarrWithBlocks[i+1][j] == newarrWithBlocks[i][j] - 1) {
+                newarrWithBlocks[i+1][j] = newarrWithBlocks[i][j] - 1;
+                queuey.add(i+1);
+                queuex.add(j);
+                newarrWithBlocks[i][j] = 99;
+                
+            }
+            if (newarrWithBlocks[i][j+1] == newarrWithBlocks[i][j] - 1) {
+                newarrWithBlocks[i][j+1] = newarrWithBlocks[i][j] - 1;
+                queuey.add(i);
+                queuex.add(j+1);
+                newarrWithBlocks[i][j] = 99;
+                
+            }
+            if (newarrWithBlocks[i - 1][j] == newarrWithBlocks[i][j] - 1) {
+                newarrWithBlocks[i - 1][j] = newarrWithBlocks[i][j] - 1;
+                queuey.add(i-1);
+                queuex.add(j);
+                newarrWithBlocks[i][j] = 99;
+                
+            }
+            queuex.remove();
+            queuey.remove();
 
         }
         newarrWithBlocks[o][p] = endpoint;
+        newarrWithBlocks[i][j] = 99;
+        
         print(newarrWithBlocks, n, m);
        
 
+
+
     }
+
+
 
     public static void print(int arr[][], int n, int m) {
         for (int i = 1; i < n; i++) {
