@@ -24,110 +24,25 @@ public class Lesson4 {
 
         int[][] newarea = arrOneByOneFilling(arr, n, m);
         print(arr, n, m);
-        arr = arreapreparatio(newarea, n, m);
-        System.out.println();
+        // arr = arreapreparation(newarea, n, m);
+        // System.out.println();
 
-        print(arr, n, m);
-        System.out.println();
+        // print(arr, n, m);
+        // System.out.println();
 
-        int[][] arrWithBlocks = blocksprep(arr, n, m, blocks);
-        print(arrWithBlocks, n, m);
-        System.out.println();
+        // int[][] arrWithBlocks = blocksprep(arr, n, m, blocks);
+        // print(arrWithBlocks, n, m);
+        // System.out.println();
 
-        int[][] newarrWithBlocks = blockspreptozero(arrWithBlocks, n, m);
-        print(newarrWithBlocks, n, m);
-        System.out.println();
+        // int[][] newarrWithBlocks = blockspreptozero(arrWithBlocks, n, m);
+        // print(newarrWithBlocks, n, m);
+        // System.out.println();
+        // int[][] findway = algorithLI(newarrWithBlocks, i, j, o, p, queuex, queuey, startpoint);
+        // print(findway, n, m);
 
-        
-        newarrWithBlocks[i][j] = startpoint;
-
-        queuey.add(i);
-        queuex.add(j);
-        print(newarrWithBlocks, n, m);
-        System.out.println();
-
-        while (i != o || j != p) {
-            i = queuey.element();
-            j = queuex.element();
-
-            if (newarrWithBlocks[i - 1][j] == 0) {
-                newarrWithBlocks[i - 1][j] = newarrWithBlocks[i][j] + 1;
-                queuey.add(i - 1);
-                queuex.add(j);
-            }
-            if (newarrWithBlocks[i][j + 1] == 0) {
-                newarrWithBlocks[i][j + 1] = newarrWithBlocks[i][j] + 1;
-                queuey.add(i);
-                queuex.add(j + 1);
-            }
-            if (newarrWithBlocks[i + 1][j] == 0) {
-                newarrWithBlocks[i + 1][j] = newarrWithBlocks[i][j] + 1;
-                queuey.add(i + 1);
-                queuex.add(j);
-            }
-            if (newarrWithBlocks[i][j - 1] == 0) {
-                newarrWithBlocks[i][j - 1] = newarrWithBlocks[i][j] + 1;
-                queuey.add(i);
-                queuex.add(j - 1);
-            }
-            queuex.remove();
-            queuey.remove();
-
-        }
-
-        print(newarrWithBlocks, n, m);
-
-        queuex.clear();
-        queuey.clear();
-
-        i = o;
-        j = p;
-
-        queuey.add(i);
-        queuex.add(j);
-        System.out.println();
-
-        while (queuex.size() > 0) {
-
-            i = queuey.element();
-            j = queuex.element();
-
-            if (newarrWithBlocks[i][j - 1] == newarrWithBlocks[i][j] - 1) {
-                newarrWithBlocks[i][j - 1] = newarrWithBlocks[i][j] - 1;
-                queuey.add(i);
-                queuex.add(j - 1);
-                newarrWithBlocks[i][j] = 99;
-
-            }
-            if (newarrWithBlocks[i + 1][j] == newarrWithBlocks[i][j] - 1) {
-                newarrWithBlocks[i + 1][j] = newarrWithBlocks[i][j] - 1;
-                queuey.add(i + 1);
-                queuex.add(j);
-                newarrWithBlocks[i][j] = 99;
-
-            }
-            if (newarrWithBlocks[i][j + 1] == newarrWithBlocks[i][j] - 1) {
-                newarrWithBlocks[i][j + 1] = newarrWithBlocks[i][j] - 1;
-                queuey.add(i);
-                queuex.add(j + 1);
-                newarrWithBlocks[i][j] = 99;
-
-            }
-            if (newarrWithBlocks[i - 1][j] == newarrWithBlocks[i][j] - 1) {
-                newarrWithBlocks[i - 1][j] = newarrWithBlocks[i][j] - 1;
-                queuey.add(i - 1);
-                queuex.add(j);
-                newarrWithBlocks[i][j] = 99;
-
-            }
-            queuex.remove();
-            queuey.remove();
-
-        }
-        newarrWithBlocks[o][p] = endpoint;
-        newarrWithBlocks[i][j] = 99;
-
-        print(newarrWithBlocks, n, m);
+        // System.out.println();
+        // int[][] showarr = showshortestway(findway, i, j, o, p, queuex, queuey, startpoint, endpoint);
+        // print(showarr, n, m);
 
     }
 
@@ -135,8 +50,8 @@ public class Lesson4 {
                                                                           // чтобы потом можно было указать где будут
                                                                           // стоять блоки
         int num = 0;
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j < arr[0].length; j++) {
                 num += 1;
                 arr[i][j] = num;
             }
@@ -154,7 +69,7 @@ public class Lesson4 {
         }
     }
 
-    public static int[][] arreapreparatio(int arr[][], int n, int m) { // Метод который ограничевает поле и ставит по
+    public static int[][] arreapreparation(int arr[][], int n, int m) { // Метод который ограничевает поле и ставит по
                                                                        // периметру -1
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < m; j++) {
@@ -194,5 +109,98 @@ public class Lesson4 {
             }
         }
         return arr;
+    }
+
+    public static int[][] algorithLI(int arr[][], int i, int j, // метод находит кратчайший путь до выхода
+            int o, int p, Queue<Integer> queuex,
+            Queue<Integer> queuey, int startpoint) {
+        arr[i][j] = startpoint;
+        queuey.add(i);
+        queuex.add(j);
+
+        while (i != o || j != p) {
+            i = queuey.element();
+            j = queuex.element();
+
+            if (arr[i - 1][j] == 0) {
+                arr[i - 1][j] = arr[i][j] + 1;
+                queuey.add(i - 1);
+                queuex.add(j);
+            }
+            if (arr[i][j + 1] == 0) {
+                arr[i][j + 1] = arr[i][j] + 1;
+                queuey.add(i);
+                queuex.add(j + 1);
+            }
+            if (arr[i + 1][j] == 0) {
+                arr[i + 1][j] = arr[i][j] + 1;
+                queuey.add(i + 1);
+                queuex.add(j);
+            }
+            if (arr[i][j - 1] == 0) {
+                arr[i][j - 1] = arr[i][j] + 1;
+                queuey.add(i);
+                queuex.add(j - 1);
+            }
+            queuex.remove();
+            queuey.remove();
+        }
+        return arr;
+    }
+
+    public static int[][] showshortestway(int arr[][], int i, int j, // метод закрашивает кратчайший путь до выхода
+                                                                     // цифрами 99
+            int o, int p, Queue<Integer> queuex,
+            Queue<Integer> queuey, int startpoint, int endpoint) {
+        i = o;
+        j = p;
+        queuex.clear();
+        queuey.clear();
+        queuey.add(i);
+        queuex.add(j);
+        System.out.println();
+
+        while (queuex.size() > 0) {
+
+            i = queuey.element();
+            j = queuex.element();
+
+            if (arr[i][j - 1] == arr[i][j] - 1) {
+                arr[i][j - 1] = arr[i][j] - 1;
+                queuey.add(i);
+                queuex.add(j - 1);
+                arr[i][j] = 99;
+
+            }
+            if (arr[i + 1][j] == arr[i][j] - 1) {
+                arr[i + 1][j] = arr[i][j] - 1;
+                queuey.add(i + 1);
+                queuex.add(j);
+                arr[i][j] = 99;
+
+            }
+            if (arr[i][j + 1] == arr[i][j] - 1) {
+                arr[i][j + 1] = arr[i][j] - 1;
+                queuey.add(i);
+                queuex.add(j + 1);
+                arr[i][j] = 99;
+
+            }
+            if (arr[i - 1][j] == arr[i][j] - 1) {
+                arr[i - 1][j] = arr[i][j] - 1;
+                queuey.add(i - 1);
+                queuex.add(j);
+                arr[i][j] = 99;
+
+            }
+            queuex.remove();
+            queuey.remove();
+
+        }
+        arr[o][p] = endpoint;
+        arr[i][j] = 99;
+
+        return arr;
+
     }
 }
