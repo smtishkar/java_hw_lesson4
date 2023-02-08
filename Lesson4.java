@@ -22,33 +22,37 @@ public class Lesson4 {
         int o = 14; // Это номер строки где будет находиться выходная точка
         int p = 7; // Это номер столбца где будет находиться выходная точка
 
-        int[][] newarea = arrOneByOneFilling(arr, n, m);
-        print(arr, n, m);
-        // arr = arreapreparation(newarea, n, m);
-        // System.out.println();
+        int[][] fillednynumarr = arrOneByOneFilling(arr);
+        print(fillednynumarr);
+        System.out.println();
 
-        // print(arr, n, m);
-        // System.out.println();
+        int[][] fencedarea = arreapreparation(fillednynumarr);
+        // print(fencedarea);
+        System.out.println();
 
-        // int[][] arrWithBlocks = blocksprep(arr, n, m, blocks);
-        // print(arrWithBlocks, n, m);
-        // System.out.println();
+        int[][] arreaWithBlocks = blocksprep(fencedarea, blocks);
+        // print(arreaWithBlocks);
+        System.out.println();
 
-        // int[][] newarrWithBlocks = blockspreptozero(arrWithBlocks, n, m);
-        // print(newarrWithBlocks, n, m);
-        // System.out.println();
-        // int[][] findway = algorithLI(newarrWithBlocks, i, j, o, p, queuex, queuey, startpoint);
-        // print(findway, n, m);
+        int[][] preparedarrWithBlocks = blockspreptozero(arreaWithBlocks);
+        print(preparedarrWithBlocks);
+        System.out.println();
 
-        // System.out.println();
-        // int[][] showarr = showshortestway(findway, i, j, o, p, queuex, queuey, startpoint, endpoint);
-        // print(showarr, n, m);
+        int[][] findway = algorithLI(preparedarrWithBlocks, i, j, o, p, queuex, queuey, startpoint);
+        print(findway);
+        System.out.println();
+
+        int[][] showarr = showshortestway(findway, i, j, o, p, queuex, queuey, startpoint, endpoint);
+        print(showarr);
+        System.out.println();
+
+        print(onlyshortestway(showarr));
 
     }
 
-    public static int[][] arrOneByOneFilling(int arr[][], int n, int m) { // Метод заполняет массива цифрами по порядку,
-                                                                          // чтобы потом можно было указать где будут
-                                                                          // стоять блоки
+    public static int[][] arrOneByOneFilling(int arr[][]) { // Метод заполняет массива цифрами по порядку,
+                                                            // чтобы потом можно было указать где будут
+                                                            // стоять блоки
         int num = 0;
         for (int i = 1; i < arr.length; i++) {
             for (int j = 1; j < arr[0].length; j++) {
@@ -59,21 +63,21 @@ public class Lesson4 {
         return arr;
     }
 
-    public static void print(int arr[][], int n, int m) { // Метода который распечатывает массив
-        for (int i = 1; i < n; i++) {
+    public static void print(int arr[][]) { // Метода который распечатывает массив
+        for (int i = 1; i < arr.length; i++) {
             System.out.println();
-            for (int j = 1; j < m; j++) {
+            for (int j = 1; j < arr[0].length; j++) {
                 System.out.print(arr[i][j] + "\t");
             }
 
         }
     }
 
-    public static int[][] arreapreparation(int arr[][], int n, int m) { // Метод который ограничевает поле и ставит по
-                                                                       // периметру -1
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                if (i == 1 || i == n - 1 || j == 1 || j == m - 1) {
+    public static int[][] arreapreparation(int arr[][]) { // Метод который ограничевает поле и ставит по
+                                                          // периметру -1
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j < arr[0].length; j++) {
+                if (i == 1 || i == arr.length - 1 || j == 1 || j == arr[0].length - 1) {
                     arr[i][j] = -1;
                 }
             }
@@ -81,11 +85,11 @@ public class Lesson4 {
         return arr;
     }
 
-    public static int[][] blocksprep(int arr[][], int n, int m, int arr2[]) { // Метод устанавливает блоки
+    public static int[][] blocksprep(int arr[][], int arr2[]) { // Метод устанавливает блоки
         int count = 0;
         while (count < arr2.length) {
-            for (int i = 1; i < n; i++) {
-                for (int j = 1; j < m; j++) {
+            for (int i = 1; i < arr.length; i++) {
+                for (int j = 1; j < arr[0].length; j++) {
                     if (arr[i][j] == arr2[count]) {
                         arr[i][j] = -1;
                     }
@@ -97,11 +101,11 @@ public class Lesson4 {
         return arr;
     }
 
-    public static int[][] blockspreptozero(int arr[][], int n, int m) { // Метод после установки блоков заменяет все
-                                                                        // числа на 0, кроме -1, чтобы начать волновой
-                                                                        // алгоритм
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
+    public static int[][] blockspreptozero(int arr[][]) { // Метод после установки блоков заменяет все
+                                                          // числа на 0, кроме -1, чтобы начать волновой
+                                                          // алгоритм
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j < arr[0].length; j++) {
                 if (arr[i][j] != -1) {
                     arr[i][j] = 0;
                 }
@@ -202,5 +206,17 @@ public class Lesson4 {
 
         return arr;
 
+    }
+
+    public static int[][] onlyshortestway(int arr[][]) { // Метод убирает все числа и оставляет только путь
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j < arr[0].length; j++) {
+                if (arr[i][j] != 99 && arr[i][j] != -1) {
+                    arr[i][j] = 0;
+                }
+
+            }
+        }
+        return arr;
     }
 }
