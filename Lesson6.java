@@ -4,7 +4,7 @@ import java.util.Queue;
 /**
  * Реализация волнового алгоритма (алгоритм Ли)
  */
-public class test {
+public class Lesson6 {
 
     public static void main(String[] args) {
         Queue<Integer> queuex = new LinkedList<Integer>();
